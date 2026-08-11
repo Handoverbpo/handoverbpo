@@ -1,6 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Google Analytics (GA4) — only loads once cookie consent is accepted (see consent strip near end of body) -->
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  window.GA_MEASUREMENT_ID = 'G-9MEZLMM2K0';
+  window.loadGoogleAnalytics = function(){
+    if (window.gaLoaded) return;
+    window.gaLoaded = true;
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + window.GA_MEASUREMENT_ID;
+    document.head.appendChild(s);
+    gtag('js', new Date());
+    gtag('config', window.GA_MEASUREMENT_ID);
+  };
+  if (localStorage.getItem('hbo-cookie-consent') === 'accepted') {
+    window.loadGoogleAnalytics();
+  }
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Handover Technologies: Built to Power Businesses for the Long Term.</title>
@@ -544,6 +563,34 @@ footer{padding:4rem 0 0;}
 .footer-legal a{font-size:.8rem; color:var(--steel-dim);}
 .footer-legal a:hover{color:var(--signal);}
 
+/* ============ COOKIE CONSENT STRIP ============ */
+#cookie-strip{
+  position:fixed; left:0; right:0; bottom:0; z-index:999;
+  background:var(--panel); border-top:1px solid var(--line);
+  padding:1.1rem 1.5rem; box-shadow:0 -10px 30px rgba(0,0,0,.35);
+  transform:translateY(110%); transition:transform .4s ease;
+}
+#cookie-strip.show{transform:translateY(0);}
+.cookie-strip-inner{
+  max-width:var(--max); margin:0 auto; display:flex; align-items:center;
+  justify-content:space-between; gap:1.5rem; flex-wrap:wrap;
+}
+.cookie-strip-text{color:var(--steel); font-size:.88rem; line-height:1.55; max-width:640px;}
+.cookie-strip-text a{color:var(--signal); text-decoration:underline; text-underline-offset:3px;}
+.cookie-strip-actions{display:flex; gap:.7rem; flex-shrink:0;}
+.cookie-strip-actions button{
+  font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:.82rem;
+  padding:.65rem 1.2rem; border-radius:2px; cursor:pointer;
+}
+#cookie-accept{background:var(--signal); color:#0a0b0d; border:1px solid var(--signal);}
+#cookie-accept:hover{opacity:.85;}
+#cookie-decline{background:transparent; color:var(--steel); border:1px solid var(--line-2);}
+#cookie-decline:hover{border-color:var(--signal-line); color:var(--signal);}
+@media(max-width:640px){
+  .cookie-strip-inner{flex-direction:column; align-items:flex-start;}
+  .cookie-strip-actions{width:100%;}
+  .cookie-strip-actions button{flex:1;}
+}
 </style>
 </head>
 <body>
@@ -1504,6 +1551,41 @@ document.querySelectorAll('.stat-num, .about-stat-num').forEach(el => {
       y: 60, ease: 'none',
       scrollTrigger: { trigger: hero || el, start: 'top top', end: 'bottom top', scrub: 0.6 }
     });
+  });
+})();
+</script>
+
+<!-- ============ COOKIE CONSENT STRIP ============ -->
+<div id="cookie-strip" role="dialog" aria-label="Cookie consent">
+  <div class="cookie-strip-inner">
+    <p class="cookie-strip-text">We use cookies to understand how visitors use this site, via Google Analytics. No personal data is sold or shared with third parties. See our <a href="/privacy.html">Privacy Policy</a> for details.</p>
+    <div class="cookie-strip-actions">
+      <button id="cookie-decline" type="button">Decline</button>
+      <button id="cookie-accept" type="button">Accept</button>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var KEY = 'hbo-cookie-consent';
+  var consent = localStorage.getItem(KEY);
+  var strip = document.getElementById('cookie-strip');
+  if (!strip) return;
+
+  if (consent !== 'accepted' && consent !== 'declined') {
+    // No decision yet: show after a brief delay so it doesn't flash on load.
+    setTimeout(function(){ strip.classList.add('show'); }, 600);
+  }
+
+  document.getElementById('cookie-accept').addEventListener('click', function(){
+    localStorage.setItem(KEY, 'accepted');
+    strip.classList.remove('show');
+    if (window.loadGoogleAnalytics) window.loadGoogleAnalytics();
+  });
+
+  document.getElementById('cookie-decline').addEventListener('click', function(){
+    localStorage.setItem(KEY, 'declined');
+    strip.classList.remove('show');
   });
 })();
 </script>
