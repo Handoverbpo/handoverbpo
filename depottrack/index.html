@@ -5,7 +5,7 @@
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
-  window.GA_MEASUREMENT_ID = 'G-9MEZLMM2K0';
+  window.GA_MEASUREMENT_ID = 'G-XXXXXXXXXX';
   window.loadGoogleAnalytics = function(){
     if (window.gaLoaded) return;
     window.gaLoaded = true;
@@ -235,6 +235,10 @@
   .price-head h2{font-size:36px;margin-top:16px}
   .price-head p{color:var(--slate);margin-top:16px;font-size:15.5px}
   .price-grid{display:grid;grid-template-columns:1fr 1.15fr;gap:24px;align-items:stretch}
+  .price-grid.single{display:block;max-width:480px;margin:0 auto}
+  .currency-toggle{display:inline-flex;gap:6px;margin-top:20px;background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:20px;padding:4px}
+  .curr-btn{background:transparent;border:none;color:var(--slate-dim);font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;letter-spacing:1px;padding:7px 16px;border-radius:16px;cursor:pointer;transition:background .15s,color .15s}
+  .curr-btn.active{background:var(--gold);color:#0a0e16}
   .price-card{border:1px solid var(--line);border-radius:14px;padding:38px 34px;background:var(--card);display:flex;flex-direction:column}
   .price-card.hi{border-color:rgba(212,176,48,.5);background:linear-gradient(160deg,rgba(212,176,48,.08),rgba(255,255,255,.02));position:relative}
   .price-badge{position:absolute;top:-13px;left:34px;background:var(--gold);color:#0a0e16;font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;font-family:'JetBrains Mono',monospace;letter-spacing:1px}
@@ -245,8 +249,8 @@
   .price-amt .u{font-size:13px;color:var(--slate-dim)}
   .price-sub{margin-top:6px;font-size:12.5px;color:var(--slate-dim);font-family:'JetBrains Mono',monospace}
   .price-list{margin-top:26px;flex:1;display:flex;flex-direction:column;gap:13px}
-  .price-list div{display:flex;gap:10px;font-size:13.5px;color:var(--slate);align-items:flex-start}
-  .price-list div::before{content:'✓';color:var(--teal);font-weight:700;flex-shrink:0}
+  .price-list div{position:relative;padding-left:24px;font-size:13.5px;color:var(--slate);line-height:1.6}
+  .price-list div::before{content:'✓';color:var(--teal);font-weight:700;position:absolute;left:0;top:0}
   .price-card.hi .price-list div::before{color:var(--gold)}
   .price-card .btn{margin-top:30px;width:100%}
   .price-fine{margin-top:14px;font-size:11.5px;color:var(--slate-dim)}
@@ -385,7 +389,7 @@
       <a href="#pricing">Pricing</a>
       <a href="#contact">Contact</a>
     </nav>
-    <a class="btn btn-gold btn-sm" href="#contact">Start free pilot</a>
+    <a class="btn btn-gold btn-sm" href="#pricing">See pricing</a>
   </div>
 </header>
 
@@ -403,10 +407,10 @@
         <h1>GPS tells you<br>it's <span class="t">there.</span><br>DepotTrack tells<br>you what <span class="g">happened.</span></h1>
         <p class="hero-sub">Telematics stops at the gate. From entry to dispatch, your depot runs on a whiteboard, a radio and hope. DepotTrack closes that gap with one QR scan at a time.</p>
         <div class="hero-cta">
-          <a class="btn btn-gold" href="#contact">Start your free 30-day pilot</a>
+          <a class="btn btn-gold" href="#pricing">See pricing</a>
           <a class="btn btn-ghost" href="#solution">See how it works</a>
         </div>
-        <div class="hero-note">NO COMMITMENT · <b>1 DEPOT</b> · SET UP IN A DAY</div>
+        <div class="hero-note">SET UP IN A DAY · UP TO 10 USERS · 3 STATIONS INCLUDED</div>
       </div>
       <div style="position:relative">
         <div class="float-tag a">AVG. DWELL TIME<b>14 MIN ↓ FROM 52</b></div>
@@ -576,41 +580,49 @@
     <div class="wrap">
       <div class="price-head">
         <div class="eyebrow">PRICING</div>
-        <h2>Try it on one depot. Pay only once it's proven.</h2>
-        <p>No pricing tricks. One setup fee, one monthly fee, and a free pilot to prove it before you commit to either.</p>
-      </div>
-      <div class="price-grid">
-        <div class="price-card">
-          <div class="price-name">Free pilot</div>
-          <div class="price-amt"><span class="n">R0</span><span class="u">/ 30 days</span></div>
-          <div class="price-sub">SINGLE DEPOT · NO COMMITMENT</div>
-          <div class="price-list">
-            <div>Fully working DepotTrack instance at one depot</div>
-            <div>All six checkpoints, live dashboard and reports</div>
-            <div>Set up and running within a day</div>
-            <div>Real data from your own vehicles, not a demo</div>
-            <div>Walk away at day 30 with zero obligation</div>
-          </div>
-          <a class="btn btn-ghost" href="#contact" onclick="document.getElementById('f-subject').value='New DepotTrack pilot enquiry (Free pilot)';document.getElementById('f-message').value='I would like to book the free 30-day single-depot pilot.';">Book your pilot depot</a>
+        <h2>Simple pricing. No hidden tiers.</h2>
+        <p>One setup fee, one monthly fee, no lock-in beyond a standard monthly term.</p>
+        <div class="currency-toggle" role="group" aria-label="Currency">
+          <button type="button" class="curr-btn active" id="curr-zar" onclick="setDtCurrency('zar')">ZAR</button>
+          <button type="button" class="curr-btn" id="curr-usd" onclick="setDtCurrency('usd')">USD</button>
         </div>
+      </div>
+      <div class="price-grid single">
         <div class="price-card hi">
-          <div class="price-badge">STANDARD PLAN</div>
-          <div class="price-name">After the pilot</div>
-          <div class="price-amt"><span class="n">R25,000</span><span class="u">once-off setup</span></div>
-          <div class="price-amt" style="margin-top:2px"><span class="n" style="font-size:30px">R10,500</span><span class="u">/ month</span></div>
+          <div class="price-name">DepotTrack</div>
+          <div class="price-amt"><span class="n" id="dt-setup-amt">R25,000</span><span class="u">once-off setup</span></div>
+          <div class="price-amt" style="margin-top:2px"><span class="n" id="dt-monthly-amt" style="font-size:30px">R10,500</span><span class="u">/ month</span></div>
           <div class="price-sub">UP TO 10 USERS · 3 STATIONS INCLUDED</div>
           <div class="price-list">
             <div>Full onboarding, checkpoint configuration &amp; QR rollout</div>
             <div>Up to 10 users and 3 stations included</div>
-            <div>Extra users at R1,000/month, extra stations at R2,500/month</div>
+            <div>Extra users at <span id="dt-extra-user">R1,000</span>/month, extra stations at <span id="dt-extra-station">R2,500</span>/month</div>
             <div>Ongoing support, audit trail &amp; reporting included</div>
             <div>No lock-in beyond a standard monthly term</div>
           </div>
-          <a class="btn btn-gold" href="#contact" onclick="document.getElementById('f-subject').value='New DepotTrack enquiry (Standard plan)';document.getElementById('f-message').value='I would like to talk about the standard plan for my fleet.';">Talk to us about your fleet</a>
+          <a class="btn btn-gold" href="#contact" onclick="document.getElementById('f-subject').value='New DepotTrack enquiry';document.getElementById('f-message').value='I would like to talk about DepotTrack for my fleet.';">Talk to us about your fleet</a>
         </div>
       </div>
     </div>
   </section>
+
+  <script>
+  (function(){
+    var dtRates = {
+      zar: { setup: 'R25,000', monthly: 'R10,500', extraUser: 'R1,000', extraStation: 'R2,500' },
+      usd: { setup: '$1,499', monthly: '$599', extraUser: '$55', extraStation: '$139' }
+    };
+    window.setDtCurrency = function(curr){
+      var r = dtRates[curr];
+      document.getElementById('dt-setup-amt').textContent = r.setup;
+      document.getElementById('dt-monthly-amt').textContent = r.monthly;
+      document.getElementById('dt-extra-user').textContent = r.extraUser;
+      document.getElementById('dt-extra-station').textContent = r.extraStation;
+      document.getElementById('curr-zar').classList.toggle('active', curr === 'zar');
+      document.getElementById('curr-usd').classList.toggle('active', curr === 'usd');
+    };
+  })();
+  </script>
 
   <!-- CTA BAND / CONTACT FORM -->
   <section class="ctaband" id="contact">
@@ -619,7 +631,7 @@
       <div>
         <div class="eyebrow">READY WHEN YOU ARE</div>
         <h2>Close your GPS blind spot.</h2>
-        <p>One depot, thirty days, no commitment. Tell us a bit about your fleet and we will set up your pilot.</p>
+        <p>Tell us a bit about your fleet and we'll get back to you within one business day.</p>
         <div class="cta-points">
           <div>Reply within one business day</div>
           <div>No pricing until you have seen it working</div>
@@ -628,8 +640,8 @@
       </div>
 
       <div class="form-card">
-        <h3>Book your free pilot</h3>
-        <div class="fsub">Fill this in and we will reach out to set up your single-depot pilot.</div>
+        <h3>Get in touch</h3>
+        <div class="fsub">Fill this in and we will reach out to talk about setting up DepotTrack for your fleet.</div>
         <form id="depottrack-form" action="https://formspree.io/f/xwvgqqkj" method="POST">
           <div class="frow">
             <div class="fgroup">
@@ -659,10 +671,10 @@
             </div>
             <div class="fgroup full">
               <label for="f-message">Message</label>
-              <textarea id="f-message" name="message" placeholder="Tell us about your depot, and whether you are enquiring about the free pilot or the standard plan."></textarea>
+              <textarea id="f-message" name="message" placeholder="Tell us about your depot, and what you'd like DepotTrack to help with."></textarea>
             </div>
           </div>
-          <input type="hidden" name="_subject" id="f-subject" value="New DepotTrack pilot enquiry">
+          <input type="hidden" name="_subject" id="f-subject" value="New DepotTrack enquiry">
           <input class="honeypot" type="text" name="_gotcha" tabindex="-1" autocomplete="off">
           <button class="btn btn-gold" type="submit">Send enquiry</button>
           <div class="form-note">We only use these details to get in touch about DepotTrack.</div>
@@ -730,7 +742,7 @@
         <h4>Get started</h4>
         <a href="mailto:depottrack@handoverbpo.com">depottrack@handoverbpo.com</a>
         <a href="https://handoverbpo.com" target="_blank" rel="noopener">handoverbpo.com</a>
-        <a href="#contact">Book a free pilot →</a>
+        <a href="#contact">Get in touch →</a>
       </div>
     </div>
     <div class="foot-bottom">
